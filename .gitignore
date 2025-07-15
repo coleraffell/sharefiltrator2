@@ -1,0 +1,10 @@
+venv/
+.vscode
+__pycache__
+Lib/
+Scripts/
+*.txt
+output/
+*.csv
+Results/
+config.yaml

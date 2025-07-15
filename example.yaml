@@ -1,0 +1,13 @@
+domain: team.sharepoint.com
+rtfa: "bKpt..."
+fedauth: "xDF=...."
+queries: 
+  - username
+  - password
+output_file: results.txt
+csv: output.csv
+save_files: False
+max_threads:
+max_file_size: 20
+refinement_filters: 
+preset: 
