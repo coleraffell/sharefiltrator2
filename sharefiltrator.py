@@ -54,8 +54,8 @@ async def process_search_results(
 
 async def run_query(options: Options, query: Query = None) -> None:
     """Execute a single search query"""
-    query = query or Query(Query.querytext, options.refinement_filters, False)
-    print("\nQuery *run_query*, ", query)
+    query = query or Query(Query.querytext, options.refinement_filters, True)
+    print("Query *run_query*, ", query)
     start_row = 0
     total_rows = None
     processed_count = 0
@@ -107,24 +107,25 @@ async def main():
     preset = options.preset
 
     if preset:
+        print("Using preset: ", preset)
         preset_queries = load_json_presets(preset)
         queries = [Query.from_json(q.get("Request")) for q in preset_queries]
 
         for q in queries:
             Query.querytext = q
-            logging.info("[+] Running query: %s", Query.querytext)
-            await run_query(options=options)
+            logging.info("\n[+] Running query: %s", q)
+            await run_query(options=options, query=q)
         
     else:
         if len(options.query) > 1:
             for q in options.query:
                 Query.querytext = q
-                logging.info("[+] Running query: %s", Query.querytext)
+                logging.info("\n[+] Running query: %s", options.query)
                 await run_query(options=options)
         else:
             q = options.query[0]
             Query.querytext = q
-            logging.info("[+] Running query: %s", Query.querytext)
+            logging.info("\n[+] Running query: %s", options.query)
             await run_query(options=options)
 
 
