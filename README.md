@@ -24,8 +24,8 @@ The primary goal is to identify files exposed due to overly permissive sharing s
 
 1.  Clone the repository:
     ```bash
-    git clone https://github.com/Friends-Security/Sharefiltrator.git
-    cd Sharefiltrator
+    git clone https://github.com/coleraffell/sharefiltrator2.git
+    cd Sharefiltrator2
     ```
 2.  (Optional, if dependencies exist) Install required Python packages:
     ```bash
@@ -37,7 +37,9 @@ The primary goal is to identify files exposed due to overly permissive sharing s
 You must extract the `rtFa` and `FedAuth` cookies for your target SharePoint domain (e.g., `yourcompany.sharepoint.com`) from your browser's developer tools after logging in.
 
 ```
-usage: sharefiltrator.py [-h] -d DOMAIN -r RTFA -f FEDAUTH -o OUTPUT_FILE [-q QUERY] [-rq REFINEMENT_FILTERS] [-s SAVE] [-t MAX_THREADS] [-m MAX_SIZE] [-p PRESET]
+usage: sharefiltrator.py [-h] -c <config_file>.yaml
+
+originally, the following would all be command line arguments. However, you can now parse these through a yaml file. All 11 options can be found in example.yaml.
 
 options:
   -h, --help            show this help message and exit
@@ -65,7 +67,39 @@ options:
 
 Open your browser's developer tools (usually F12), navigate to the "Application" (Chrome/Edge) or "Storage" (Firefox) tab, select "Cookies", find your SharePoint domain, and copy the values for `rtFa` and `FedAuth`.
 
-## Example Usage
+## New Usage
+
+**Standard word search**
+
+Enter the keywords you're searching for either as a list or singular:
+
+```bash
+queries: keyword
+```
+Or
+```bash
+queries: 
+    - Keyword
+    - keyword2
+```
+
+FQL search is set true by default, allowing for queries such as:
+
+```bash
+OR(\"username\", \"user\", \"login\", \"password\", \"passwd\", \"passw\")
+```
+
+**Advanced Searches**
+
+creds.json and snaffpoint.json are examples of presets. These can be linked into the yaml file the same as they would command line. Refinment filters can be used as standard also. For example:
+
+```bash
+filetype:or(\"txt\",\"log\",\"csv\",\"yml\",\"yaml\")
+```
+
+Arguments are the same as original, rename the output_file/csv as you wish. See the original usage below.
+
+## Original Example Usage
 
 **Run a default query and save URLs:**
 
