@@ -106,6 +106,9 @@ async def main():
     options = get_options_from_args(config)
     preset = options.preset
 
+    if isinstance(options.query, str):
+        options.query = [options.query]
+
     if preset:
         print("Using preset: ", preset)
         preset_queries = load_json_presets(preset)

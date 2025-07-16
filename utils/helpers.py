@@ -27,15 +27,16 @@ def save_to_csv(
             writer = csv.writer(csvfile)
 
             if not file_exist:
-                writer.writerow(["URL", "Sharepoint site", "Filename", "Last Modified", "Query"])
+                writer.writerow(["URL", "Sharepoint site", "Filename", "Extension", "Last Modified", "Query"])
 
             for line in lines:
                 segments = line.path.split('/')
                 site_name = segments[4]
                 file_name = segments[len(segments)-1]
+                extension = (os.path.splitext(line.path))[1]
 
                 writer.writerow([
-                    line.path, site_name, file_name, line.last_modified_time, Query.querytext
+                    line.path, site_name, file_name, extension, line.last_modified_time, Query.querytext
                 ])
 
     except Exception as e:
